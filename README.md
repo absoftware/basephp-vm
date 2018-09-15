@@ -1,2 +1,4 @@
-# basephp-vm
-Virtual machine for BasePHP projects and libraries based on Vagrant.
+
+# BasePHP VM
+
+Virtual machine for **BasePHP** projects and libraries based on Vagrant.

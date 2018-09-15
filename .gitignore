@@ -1,0 +1,9 @@
+
+# Vagrant files
+.vagrant/
+
+# Custom Vagrant configuration
+vagrant-config.user.json
+
+# PhpStorm files
+.idea/
