@@ -63,12 +63,20 @@ or any other project based on **BasePHP**. File `vagrant-config.user.json` would
 }
 ```
 
-### Launch virtual machine
+### Vagrant commands
 
-Go to folder with cloned **BasePHP VM** and execute command:
+All following commands must be used in directory with `Vagrantfile`.
+
+Go to folder with cloned **BasePHP VM** and execute following command to launch virtual machine:
 
 ```
 vagrant up
+```
+
+You may login into virtual machine through **SSH**:
+
+```
+vagrant ssh 
 ```
 
 If you change synced folders then you have to reload virtual machine 
@@ -92,10 +100,35 @@ similar to this:
 vagrant provision --provision-with "basephp-framework" 
 ```
 
+Turning off:
+
+```
+vagrant halt 
+```
+
+Destroying virtual machine with all data:
+
+```
+vagrant destroy 
+```
+
+After destroying `vagrant up` will recreate virtual machine from scratch.
+
 ### Set domains on host machine
 
-You need to configure domains for your **BasePHP** projects. You can
-add them to your `/etc/hosts` file:
+You need to configure domains for **BasePHP** projects on
+your host machine.
+
+#### Recommendations
+
+Domain `.dev` is not recommended for your local projects because it
+is real generic top-level domain (gTLD). Popular browsers force using `https://`
+protocol for this domain. You can pick one of the following top-level
+domains for your local projects: `.vm`, `.test`, `.local`.
+
+#### Domains without wildcard
+
+Domains without wildcard can be added to file `/etc/hosts`. For example:
 
 ```
 192.168.10.151 basephp-framework.vm 
