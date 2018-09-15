@@ -83,6 +83,10 @@ install_apache_php() {
         php7.2-curl php-pear php-imagick php7.2-intl php7.2-mbstring \
         php-gettext php7.2-imap
     a2enmod rewrite
+
+    echo "Associating Vagrant user with Apache"
+    gpasswd -a vagrant www-data
+    gpasswd -a www-data vagrant
     
     echo "Copying Apache configuration files"
 
@@ -106,6 +110,20 @@ install_less() {
     npm install -g less less-plugin-clean-css
 }
 
+website_configuration() {
+    echo "Changing default site"
+    cp /vagrant/files/etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
+    chmod 644 /etc/apache2/sites-available/000-default.conf
+    chown root:root /etc/apache2/sites-available/000-default.conf
+    a2ensite 000-default.conf
+
+    echo "Disabling conflicting Apache2 modules"
+    a2disconf javascript-common
+
+    echo "Restarting Apache"
+    service apache2 reload
+}
+
 echo "BasePHP VM - Provisioning virtual machine..."
 update_apt_get
 install_emacs
@@ -116,3 +134,4 @@ install_git
 install_mysql
 install_apache_php
 install_less
+website_configuration
