@@ -16,7 +16,7 @@ This instruction works for **Mac OS**, **Linux** or **Windows** operating system
 
 ### Configuration
 
-Copy file `vagrant-config.default.json` to file with name `vagrant-config.user.json`:
+Create custom configuration by copying default configuration:
 
 ```
 cp vagrant-config.default.json vagrant-config.user.json
