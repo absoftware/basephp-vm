@@ -10,7 +10,7 @@
 require 'json'
 
 # Predefined file names for default and user configs.
-config_default_path = 'vagrant-config.user.json'
+config_default_path = 'vagrant-config.default.json'
 config_user_path = 'vagrant-config.user.json'
 
 # Load user configuration otherwise fallback to default configuration.
