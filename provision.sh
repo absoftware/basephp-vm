@@ -71,6 +71,11 @@ install_mysql() {
     apt-get -q -y install mysql-server mysql-client
     service mysql restart
     mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql
+
+    echo "Copying MySQL configuration files"
+    cp /vagrant/files/etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/mysql.conf.d/mysqld.cnf
+    chmod 644 /etc/mysql/mysql.conf.d/mysqld.cnf
+    chown root:root /etc/mysql/mysql.conf.d/mysqld.cnf
     
     echo "Restarting MySQL service"
     service mysql restart
