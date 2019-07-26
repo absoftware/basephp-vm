@@ -1,3 +1,4 @@
+# coding: utf-8
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 #
@@ -36,8 +37,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Configure network
     config.vm.network "private_network", ip: vagrant_config['virtual_machine']['ip_address']
-    config.vm.network :forwarded_port, guest: 80, host: 8080
-    config.vm.network :forwarded_port, guest: 443, host: 8443
+    config.vm.network :forwarded_port, guest: 80, host: 9080
+    config.vm.network :forwarded_port, guest: 443, host: 9443
 
     # Virtual machine properties
     config.vm.provider :virtualbox do |vb|
