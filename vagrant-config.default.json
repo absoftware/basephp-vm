@@ -1,6 +1,6 @@
 {
   "virtual_machine": {
-    "ip_address": "192.168.10.151",
+    "ip_address": "192.168.56.1",
     "memory": 2048,
     "name": "basephp.vm"
   },

@@ -28,9 +28,8 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-    # Ubuntu 18.04 LTS (Bento)
-    config.vm.box = "bento/ubuntu-18.04"
-    config.vm.box_version = "201806.08.0"
+    # Ubuntu 20.04 LTS (Focal Fossa)
+    config.vm.box = "bento/ubuntu-20.04"
 
     # Provisioning
     config.vm.provision "shell", path: "provision.sh"
@@ -42,6 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     # Virtual machine properties
     config.vm.provider :virtualbox do |vb|
+        vb.gui = true # workaround for https://github.com/hashicorp/vagrant/issues/12557
         vb.name = vagrant_config['virtual_machine']['name']
         vb.memory = vagrant_config['virtual_machine']['memory']
     end

@@ -1,7 +1,7 @@
 
 # use default settings
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
+if [ -f ~/.profile ]; then
+    . ~/.profile
 fi
 
 # set git branch in command prompt
