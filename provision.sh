@@ -68,7 +68,7 @@ install_mysql() {
     service mysql restart
 }
 
-install_nginx_php() {
+install_nginx() {
     echo "Installing NGINX"
     apt-get -y install nginx
 
