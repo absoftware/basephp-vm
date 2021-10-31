@@ -116,8 +116,8 @@ install_composer() {
 
 install_node() {
     echo "Installing Node.js and NPM"
-    apt-get -y install nodejs npm
-    npm install -g npm@latest
+    curl -sL https://deb.nodesource.com/setup_16.x | bash -
+    apt-get -y install nodejs
 }
 
 echo "BasePHP VM - Provisioning virtual machine..."
