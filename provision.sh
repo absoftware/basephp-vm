@@ -72,20 +72,26 @@ install_nginx_php() {
     echo "Installing NGINX"
     apt-get -y install nginx
 
+    echo "Associating Vagrant user with www-data"
+    gpasswd -a vagrant www-data
+    gpasswd -a www-data vagrant
+}
+
+install_php() {
     echo "Installing PHP"
     apt-get -y install software-properties-common
     add-apt-repository ppa:ondrej/php
     apt-get -y install php8.0-fpm
 
-    echo "Associating Vagrant user with www-data"
-    gpasswd -a vagrant www-data
-    gpasswd -a www-data vagrant
-
     echo "Installing PHP extensions"
     apt-get -y install php8.0-mysql php8.0-gd php8.0-mbstring php8.0-curl libphp-adodb php-xdebug
 
-    echo "Restarting NGINX service"
+    echo "Update Xdebug config"
+    copy_file /vagrant/files/etc/php/8.0/mods-available/xdebug.ini /etc/php/8.0/mods-available/xdebug.ini 644 root:root
+
+    echo "Restarting NGINX and PHP services"
     systemctl restart nginx
+    service php8.0-fpm restart
 }
 
 default_website_configuration() {
@@ -108,11 +114,10 @@ install_composer() {
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 }
 
-install_webpack_less() {
-    echo "Installing Webpack and LESS"
-    apt-get -y install nodejs
-    apt-get -y install npm
-    npm install -g npm-install-peers webpack webpack-cli less less-plugin-clean-css less-loader
+install_node() {
+    echo "Installing Node.js and NPM"
+    apt-get -y install nodejs npm
+    npm install -g npm@latest
 }
 
 echo "BasePHP VM - Provisioning virtual machine..."
@@ -122,7 +127,8 @@ set_hostname
 install_openssh
 install_git
 install_mysql
-install_nginx_php
+install_nginx
+install_php
 default_website_configuration
 install_composer
-install_webpack_less
+install_node
