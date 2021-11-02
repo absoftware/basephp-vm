@@ -17,13 +17,14 @@ function copy_file {
 
 update_apt_get() {
     echo "Updating apt-get"
-    apt-get -y update
-    apt-get -y upgrade
+    apt-get update -y
+    apt-get upgrade -y
+    apt-get install -y build-essential
 }
 
 install_emacs() {
     echo "Installing Emacs"
-    apt-get -y install emacs
+    apt-get install -y emacs
 
     echo "Copying Emacs configuration file to vagrant home directory"
     copy_file /vagrant/files/home/.emacs /home/vagrant/.emacs 644 vagrant:vagrant
@@ -39,13 +40,13 @@ set_hostname() {
 
 install_openssh() {
     echo "Installing Open SSH"
-    apt-get -y install openssh-server openssh-client
+    apt-get install -y openssh-server openssh-client
     service ssh restart
 }
 
 install_git() {
     echo "Installing Git"
-    apt-get -y install git gitk ruby
+    apt-get install -y git gitk ruby
     
     echo "Copying Bash configuration file to vagrant home directory"
     copy_file /vagrant/files/home/.bash_profile /home/vagrant/.bash_profile 644 vagrant:vagrant
@@ -56,8 +57,6 @@ install_git() {
 
 install_mysql() {
     echo "Installing MySQL"
-    apt-get -y update
-    apt-get -y upgrade
     apt-get install -q -y mariadb-server mariadb-client
     service mysql restart
 
@@ -70,7 +69,7 @@ install_mysql() {
 
 install_nginx() {
     echo "Installing NGINX"
-    apt-get -y install nginx
+    apt-get install -y nginx
 
     echo "Associating Vagrant user with www-data"
     gpasswd -a vagrant www-data
@@ -79,12 +78,12 @@ install_nginx() {
 
 install_php() {
     echo "Installing PHP"
-    apt-get -y install software-properties-common
+    apt-get install -y software-properties-common
     add-apt-repository ppa:ondrej/php
-    apt-get -y install php8.0-fpm
+    apt-get install -y php8.0-fpm
 
     echo "Installing PHP extensions"
-    apt-get -y install php8.0-mysql php8.0-gd php8.0-mbstring php8.0-curl libphp-adodb php-xdebug
+    apt-get install -y php8.0-mysql php8.0-gd php8.0-mbstring php8.0-curl libphp-adodb php-xdebug
 
     echo "Update Xdebug config"
     copy_file /vagrant/files/etc/php/8.0/mods-available/xdebug.ini /etc/php/8.0/mods-available/xdebug.ini 644 root:root
@@ -114,10 +113,20 @@ install_composer() {
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 }
 
+install_python() {
+    apt-get install -y python # It's required by NPM to install SASS correctly
+}
+
 install_node() {
+    echo "Installing NVM"
+    su - vagrant -s /bin/bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash'
+
     echo "Installing Node.js and NPM"
     curl -sL https://deb.nodesource.com/setup_16.x | bash -
-    apt-get -y install nodejs
+    apt-get install -y nodejs
+
+    echo "Copying script which allows easily uninstall Node.js totally"
+    copy_file /vagrant/files/home/.rm_nodejs.sh /home/vagrant/.rm_nodejs.sh 644 vagrant:vagrant
 }
 
 echo "BasePHP VM - Provisioning virtual machine..."
@@ -130,5 +139,6 @@ install_mysql
 install_nginx
 install_php
 default_website_configuration
+install_python
 install_composer
 install_node
