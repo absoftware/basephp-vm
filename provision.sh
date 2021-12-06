@@ -83,7 +83,7 @@ install_php() {
     apt-get install -y php8.0-fpm
 
     echo "Installing PHP extensions"
-    apt-get install -y php8.0-mysql php8.0-gd php8.0-mbstring php8.0-curl libphp-adodb php-xdebug
+    apt-get install -y php8.0-mysql php8.0-gd php8.0-mbstring php8.0-curl php8-xml libphp-adodb php-xdebug
 
     echo "Update Xdebug config"
     copy_file /vagrant/files/etc/php/8.0/mods-available/xdebug.ini /etc/php/8.0/mods-available/xdebug.ini 644 root:root
