@@ -222,3 +222,10 @@ Links:
 
 - Vagrant bug report: https://github.com/hashicorp/vagrant/issues/12557
 - VirtualBox bug report: https://www.virtualbox.org/ticket/20636
+
+## SSL Certificates
+
+Links:
+
+- https://www.ssllabs.com/ssltest/
+- https://whatsmychaincert.com
